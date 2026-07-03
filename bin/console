@@ -9,6 +9,6 @@ use App\Command\WachtbladToIcsCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application('wachtblad-ics', '1.0.0');
-$application->add(new WachtbladToIcsCommand());
+$application->addCommand(new WachtbladToIcsCommand());
 $application->setDefaultCommand('wachtblad:sync-ics', false);
 $application->run();
