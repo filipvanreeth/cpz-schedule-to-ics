@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__).'/vendor/autoload.php';
+
+use App\Command\WachtbladToIcsCommand;
+use Symfony\Component\Console\Application;
+
+$application = new Application('wachtblad-ics', '1.0.0');
+$application->add(new WachtbladToIcsCommand());
+$application->setDefaultCommand('wachtblad:sync-ics', false);
+$application->run();

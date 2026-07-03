@@ -1,0 +1,19 @@
+{
+    "name": "filip/wachtblad-ics",
+    "description": "Console command die CPZ wachtblad-shiften ophaalt en omzet naar ICS",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "symfony/console": "^7.0",
+        "symfony/http-client": "^7.0",
+        "spatie/ray": "^1.48"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
