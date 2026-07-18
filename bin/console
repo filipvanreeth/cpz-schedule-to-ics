@@ -3,10 +3,10 @@
 
 declare(strict_types=1);
 
-require dirname(__DIR__).'/vendor/autoload.php';
 
 use App\Command\WachtbladToIcsCommand;
 use Symfony\Component\Console\Application;
+
 $basePath= dirname(__DIR__);
 require "$basePath/vendor/autoload.php";
 $dotenv = \Dotenv\Dotenv::createImmutable($basePath);

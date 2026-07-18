@@ -6,7 +6,6 @@ namespace App\Command;
 
 use App\Ics\IcsCalendarBuilder;
 use App\Ics\IcsEvent;
-use DateTimeImmutable;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -40,6 +39,7 @@ final class WachtbladToIcsCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $cookie = $_ENV['SESSION_COOKIE'];
+        
         if ($cookie === false || $cookie === '') {
             $io->error(
                 'Geen WACHTBLAD_COOKIE omgevingsvariabele gevonden. '
@@ -59,7 +59,11 @@ final class WachtbladToIcsCommand extends Command
         }
 
         try {
-            $rawEvents = $this->fetchEvents($start, $end, $cookie);
+            $rawEvents = $this->fetchEvents(
+                $start,
+                $end,
+                $cookie
+            );
         } catch (RuntimeException $e) {
             $io->error($e->getMessage());
 
