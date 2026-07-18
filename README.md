@@ -20,10 +20,10 @@ De tool heeft een geldige sessie-cookie van het wachtblad-intranet nodig, want e
 1. Log in op het wachtblad via je browser.
 2. Open de DevTools (F12) en ga naar het tabblad **Network**.
 3. Klik op een willekeurig verzoek naar `wachtblad.intranetcpz.be` en kopieer de volledige waarde van de **Cookie**-header.
-4. Zet die waarde in een omgevingsvariabele:
+4. Zet die waarde in het `.env` bestand:
 
 ```bash
-export WACHTBLAD_COOKIE="jouw gekopieerde cookie-string"
+SESSION_COOKIE="jouw gekopieerde cookie-string"
 ```
 
 > De cookie verloopt na verloop van tijd. Krijg je een `401`/`403`-foutmelding, log dan opnieuw in en herhaal deze stappen.
