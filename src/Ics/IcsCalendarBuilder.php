@@ -17,7 +17,8 @@ final class IcsCalendarBuilder
      */
     public function build(array $events, bool $onlyOwn = true): string
     {
-        $now = $this->toIcsDateTime(new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $dtStamp = $this->toIcsDateTime($now);
 
         $lines = [
             'BEGIN:VCALENDAR',
@@ -25,7 +26,7 @@ final class IcsCalendarBuilder
             'PRODID:-//Wachtblad Sync//NL',
             'CALSCALE:GREGORIAN',
             'METHOD:PUBLISH',
-            'X-WR-CALNAME:'.self::CALENDAR_NAME,
+            'X-WR-CALNAME:' . self::CALENDAR_NAME,
         ];
 
         foreach ($events as $event) {
@@ -33,15 +34,19 @@ final class IcsCalendarBuilder
                 continue;
             }
 
+            if ($event->start <= $now) {
+                continue;
+            }
+
             $lines[] = 'BEGIN:VEVENT';
-            $lines[] = 'UID:wachtblad-'.$event->id.'@'.self::UID_DOMAIN;
-            $lines[] = 'DTSTAMP:'.$now;
-            $lines[] = 'DTSTART:'.$this->toIcsDateTime($event->start);
-            $lines[] = 'DTEND:'.$this->toIcsDateTime($event->end);
-            $lines[] = 'SUMMARY:'.$this->escape($event->summary);
+            $lines[] = 'UID:wachtblad-' . $event->id . '@' . self::UID_DOMAIN;
+            $lines[] = 'DTSTAMP:' . $dtStamp;
+            $lines[] = 'DTSTART:' . $this->toIcsDateTime($event->start);
+            $lines[] = 'DTEND:' . $this->toIcsDateTime($event->end);
+            $lines[] = 'SUMMARY:' . $this->escape($event->summary);
 
             if ($event->description !== '') {
-                $lines[] = 'DESCRIPTION:'.$this->escape($event->description);
+                $lines[] = 'DESCRIPTION:' . $this->escape($event->description);
             }
 
             $lines[] = 'END:VEVENT';
@@ -49,7 +54,7 @@ final class IcsCalendarBuilder
 
         $lines[] = 'END:VCALENDAR';
 
-        return implode("\r\n", $lines)."\r\n";
+        return implode("\r\n", $lines) . "\r\n";
     }
 
     private function toIcsDateTime(DateTimeImmutable $dateTime): string
