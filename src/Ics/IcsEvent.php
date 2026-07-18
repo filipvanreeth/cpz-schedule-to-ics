@@ -24,7 +24,7 @@ final class IcsEvent
     public static function fromApiResponse(array $raw): self
     {
         $id = $raw["id"] ?? '';
-        $title = 'CPZ - Wachtdient';
+        $title = 'CPZ - Wachtdienst';
         $summary = str_replace("\n", ' ', $title);
 
         $description = (string) ($raw['extendedProps']['description'] ?? '');
