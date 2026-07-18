@@ -6,6 +6,7 @@ namespace App\Command;
 
 use App\Ics\IcsCalendarBuilder;
 use App\Ics\IcsEvent;
+use DateTimeImmutable;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -15,6 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
+
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+
+$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__,2));
+$dotenv->load();
+
 
 #[AsCommand(
     name: 'wachtblad:sync-ics',
@@ -38,12 +45,11 @@ final class WachtbladToIcsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $cookie = getenv('WACHTBLAD_COOKIE');
+        $cookie = $_ENV['SESSION_COOKIE'];
         if ($cookie === false || $cookie === '') {
             $io->error(
                 'Geen WACHTBLAD_COOKIE omgevingsvariabele gevonden. '
                 . 'Log in via de browser, kopieer de Cookie-header uit DevTools '
-                . 'en zet ze met: export WACHTBLAD_COOKIE="..."'
             );
 
             return Command::FAILURE;
