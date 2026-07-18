@@ -17,12 +17,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 
-require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
-
-$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__,2));
-$dotenv->load();
-
-
 #[AsCommand(
     name: 'wachtblad:sync-ics',
     description: 'Haalt wachtdienst-shiften op van het CPZ-intranet en schrijft ze weg als ICS-bestand',
